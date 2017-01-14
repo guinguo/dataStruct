@@ -1,5 +1,7 @@
 package top.guinguo.algorithm;
 
+import java.util.Stack;
+
 /**
  * Created by guin_guo on 2017/1/12.
  */
@@ -28,6 +30,8 @@ public class BiTree {
         tree.inOrdertraverse(root);
         System.out.println();
         tree.postOrdertraverse(root);
+        System.out.println();
+        tree.inOrdertraverseNr(root);
     }
 
     /**
@@ -112,7 +116,24 @@ public class BiTree {
      * @param root
      */
     public void inOrdertraverseNr(BiTNode root) {
-        //TODO
+        Stack<BiTNode> stack = new Stack<>();
+        stack.push(root);
+        BiTNode biTNode;
+        while (!stack.empty()) {
+            biTNode = stack.peek();
+            //left to the end
+            while (biTNode != null) {
+                stack.push(biTNode.left);
+                biTNode = biTNode.left;
+            }
+            stack.pop();//pop null node
+            //visit top and turn right
+            if (!stack.empty()) {
+                biTNode = stack.pop();
+                System.out.print(biTNode.data+",");
+                stack.push(biTNode.right);
+            }
+        }
     }
 
     /**
