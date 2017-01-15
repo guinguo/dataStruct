@@ -25,13 +25,21 @@ public class BiTree {
         tree.insert(root,5);
         tree.insert(root,9);
 //        System.out.println(tree.getRoot().data+","+tree.getRoot().right.data+","+tree.getRoot().left.data+","+tree.getRoot().left.left.data);
+        System.out.println("Pre with recursive:");
         tree.preOrderTraverse(root);
         System.out.println();
+        System.out.println("In with recursive:");
         tree.inOrdertraverse(root);
         System.out.println();
+        System.out.println("Post with recursive:");
         tree.postOrdertraverse(root);
         System.out.println();
+        System.out.println("======================");
+        System.out.println("Pre with No-recursive:");
         tree.inOrdertraverseNr(root);
+        System.out.println();
+        System.out.println("In with No-recursive:");
+        tree.preOrderTraverseNr(root);
     }
 
     /**
@@ -107,7 +115,24 @@ public class BiTree {
      * @param root
      */
     public void preOrderTraverseNr(BiTNode root) {
-        //TODO
+        Stack<BiTNode> stack = new Stack<>();
+        stack.push(root);
+        BiTNode biTNode;
+        while (!stack.empty()) {
+            biTNode = stack.peek();
+            //left to the end and print each node
+            while (biTNode != null) {
+                System.out.print(biTNode.data+",");
+                stack.push(biTNode.left);
+                biTNode = biTNode.left;
+            }
+            stack.pop();//pop null node
+            //turn right push it to stack
+            if (!stack.empty()) {
+                biTNode = stack.pop();
+                stack.push(biTNode.right);
+            }
+        }
     }
 
     /**
