@@ -36,10 +36,16 @@ public class BiTree {
         System.out.println();
         System.out.println("======================");
         System.out.println("Pre with No-recursive:");
-        tree.inOrdertraverseNr(root);
+        tree.preOrderTraverseNr(root);
+        System.out.println();
+        System.out.println("Pre with No-recursive2:");
+        tree.preOrderTraverseNr2(root);
         System.out.println();
         System.out.println("In with No-recursive:");
-        tree.preOrderTraverseNr(root);
+        tree.inOrdertraverseNr(root);
+        System.out.println();
+        System.out.println("Post with No-recursive:");
+        tree.postOrdertraverseNr(root);
     }
 
     /**
@@ -134,6 +140,26 @@ public class BiTree {
             }
         }
     }
+    /**
+     * The preorder traverses the binary tree
+     * Non-recursive implementation
+     * @param root
+     */
+    public void preOrderTraverseNr2(BiTNode root) {
+        Stack<BiTNode> stack = new Stack<>();
+        stack.push(root);
+        BiTNode biTNode = root;
+        while (!stack.empty()) {
+            System.out.print(biTNode.data+",");
+            if (biTNode.right != null)
+                stack.push(biTNode.right);
+            if (biTNode.left != null)
+                biTNode = biTNode.left;
+            else {
+                biTNode = stack.pop();
+            }
+        }
+    }
 
     /**
      * Inorder traversal binary tree
@@ -167,7 +193,31 @@ public class BiTree {
      * @param root
      */
     public void postOrdertraverseNr(BiTNode root) {
-        //TODO
+        Stack<BiTNode> stack = new Stack<>();
+        BiTNode curNode = root;//current Node
+        BiTNode lastVisitNode = null; //last visit node
+        //turn end to the left
+        while (curNode != null) {
+            stack.push(curNode);
+            curNode = curNode.left;
+        }
+        while (!stack.empty()) {
+            curNode = stack.pop();
+            //one node can be visited which it's right is null or it's right node was last visited.
+            if (curNode.right == null || curNode.right == lastVisitNode) {
+                System.out.print(curNode.data + ",");
+                lastVisitNode = curNode;
+            } else { //or else if (curNode.left == lastVisitNode) --> left is last visited,we shoule turn to right side.
+                //push root node
+                stack.push(curNode);
+                //now right must be not null
+                curNode = curNode.right;
+                while (curNode != null) {
+                    stack.push(curNode);
+                    curNode = curNode.left;
+                }
+            }
+        }
     }
 
     public BiTNode BiTNode(Integer data) {
