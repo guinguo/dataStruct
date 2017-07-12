@@ -19,8 +19,7 @@ public class MergeSort {
      * @param a
      */
     public static void mergeSort(int[] a) {
-        int[] temp = new int[a.length];
-        MSort(a, 0, a.length - 1, temp);
+        MSort(a, 0, a.length - 1);
     }
 
     /**
@@ -29,14 +28,13 @@ public class MergeSort {
      * @param a
      * @param first
      * @param last
-     * @param temp
      */
-    public static void MSort(int[] a, int first, int last, int[] temp) {
+    public static void MSort(int[] a, int first, int last) {
         if (first < last) {
             int mid = (first + last) / 2;
-            MSort(a, first, mid,temp);
-            MSort(a, mid + 1, last, temp);
-            Merge(a, first, mid, last, temp);
+            MSort(a, first, mid);
+            MSort(a, mid + 1, last);
+            Merge(a, first, mid, last);
         }
     }
 
@@ -46,9 +44,9 @@ public class MergeSort {
      * @param first
      * @param mid
      * @param last
-     * @param temp
      */
-    public static void Merge(int[] a, int first, int mid, int last, int[] temp) {
+    public static void Merge(int[] a, int first, int mid, int last) {
+        int[] temp = new int[last - first + 1];
         int i = first, j = mid + 1;
         int m = mid, n = last;
         int k = 0;
